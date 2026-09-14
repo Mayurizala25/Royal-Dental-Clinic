@@ -45,6 +45,20 @@
   .story-gallery-image { width: 100%; height: 260px; object-fit: contain; display: block; border-radius: 18px; background: #F3FAFA; transition: transform .7s cubic-bezier(.22,.61,.36,1); }
   .story-visual:hover .story-gallery-image { transform: scale(1.035); }
   @media (max-width: 700px) { .story-gallery-image { height: 230px; } }
+  .stories-panel { padding: clamp(24px, 4vw, 48px) !important; }
+  .stories-header { margin-bottom: 28px !important; }
+  .stories-content { grid-template-columns: minmax(300px, 1.02fr) minmax(320px, .98fr) !important; gap: clamp(24px, 4vw, 44px) !important; }
+  .story-visual { min-height: 380px; display: flex; flex-direction: column; justify-content: center; }
+  .story-gallery-image { height: 310px; }
+  .story-review-column { padding: clamp(24px, 3.5vw, 38px); border-radius: 24px; background: rgba(255,255,255,.62); border: 1px solid rgba(255,255,255,.9); box-shadow: 0 24px 48px -32px rgba(15,42,74,.38); transform: translateZ(24px); }
+  .story-review-column .story-review p { max-width: 520px; }
+  .story-controls { margin-top: 24px !important; }
+  .stories-panel > div > div:first-child { margin-bottom: 28px !important; }
+  .stories-panel > div > div:nth-child(2) { grid-template-columns: minmax(300px, 1.02fr) minmax(320px, .98fr) !important; gap: clamp(24px, 4vw, 44px) !important; }
+  .stories-panel > div > div:nth-child(2) > div:first-child { min-height: 380px; display: flex; flex-direction: column; justify-content: center; }
+  .stories-panel > div > div:nth-child(2) > div:nth-child(2) { padding: clamp(24px, 3.5vw, 38px); border-radius: 24px; background: rgba(255,255,255,.62); border: 1px solid rgba(255,255,255,.9); box-shadow: 0 24px 48px -32px rgba(15,42,74,.38); transform: translateZ(24px); }
+  .stories-panel > div > div:nth-child(2) > div:nth-child(2) > div:last-child { margin-top: 24px !important; }
+  @media (max-width: 700px) { .stories-panel > div > div:nth-child(2) { grid-template-columns: 1fr !important; } .stories-panel > div > div:nth-child(2) > div:first-child { min-height: 0; } .story-gallery-image { height: 240px; } }
   @media (max-width: 860px) { .stories-panel::after { right: 3%; top: 4%; width: 90px; height: 90px; font-size: 42px; } }
   @media (max-width: 700px) { .stories-layout { grid-template-columns: 1fr !important; } .stories-panel::after { display: none; } }
   @media (prefers-reduced-motion: reduce) {
@@ -507,9 +521,9 @@ class Component extends DCLogic {
       });
     };
     if (testimonials.length) {
-      if (previousTestimonial) previousTestimonial.addEventListener('click', () => showTestimonial(testimonialIndex - 1));
-      if (nextTestimonial) nextTestimonial.addEventListener('click', () => showTestimonial(testimonialIndex + 1));
-      testimonialDots.forEach((dot, i) => dot.addEventListener('click', () => showTestimonial(i)));
+      if (previousTestimonial) previousTestimonial.addEventListener('click', () => showStoryGallery(storyGalleryIndex - 1));
+      if (nextTestimonial) nextTestimonial.addEventListener('click', () => showStoryGallery(storyGalleryIndex + 1));
+      testimonialDots.forEach((dot, i) => dot.addEventListener('click', () => showStoryGallery(i)));
       showTestimonial(0);
     }
 
@@ -521,7 +535,9 @@ class Component extends DCLogic {
     const showStoryGallery = (index) => {
       storyGalleryIndex = (index + storyGallerySlides.length) % storyGallerySlides.length;
       storyGallerySlides.forEach((slide, i) => slide.classList.toggle('is-active', i === storyGalleryIndex));
+      showTestimonial(Math.min(storyGalleryIndex, testimonials.length - 1));
       if (storyGalleryCount) storyGalleryCount.textContent = (storyGalleryIndex + 1) + ' / ' + storyGallerySlides.length;
+      if (testimonialCount) testimonialCount.textContent = (storyGalleryIndex + 1) + ' / ' + storyGallerySlides.length;
     };
     if (storyGallerySlides.length) {
       if (storyGalleryPrevious) storyGalleryPrevious.addEventListener('click', () => showStoryGallery(storyGalleryIndex - 1));
