@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+  html, body { margin: 0; padding: 0; background: #ffffff; }
+  body { font-family: Poppins, system-ui, sans-serif; color: #0F2A4A; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  * { box-sizing: border-box; }
+  a { color: #0E7C90; text-decoration: none; }
+  a:hover { color: #0F2A4A; }
+  @keyframes ivFloat { 0%,100% { transform: translate3d(var(--mx,0px), var(--my,0px), var(--z,0px)); } 50% { transform: translate3d(var(--mx,0px), calc(var(--my,0px) - 14px), var(--z,0px)); } }
+  @keyframes ivFloatSlow { 0%,100% { transform: translate3d(var(--mx,0px), var(--my,0px), var(--z,0px)); } 50% { transform: translate3d(var(--mx,0px), calc(var(--my,0px) - 9px), var(--z,0px)); } }
+  @keyframes ivGlow { 0%,100% { opacity: .55; transform: scale(1); } 50% { opacity: .8; transform: scale(1.06); } }
+  @keyframes ivOrbit { 0%,100% { transform: rotateY(-11deg) rotateX(3deg); } 50% { transform: rotateY(11deg) rotateX(-3deg); } }
+  @keyframes ivRing { 0% { transform: rotateX(74deg) rotateZ(0deg); } 100% { transform: rotateX(74deg) rotateZ(360deg); } }
+  @keyframes ivBreathe { 0%,100% { transform: translate3d(0,0,60px); } 50% { transform: translate3d(0,-18px,60px); } }
+  @keyframes ivKen { 0% { transform: scale(1.02) translate3d(0,0,0); } 50% { transform: scale(1.12) translate3d(-1.5%,-1%,0); } 100% { transform: scale(1.02) translate3d(0,0,0); } }
+  @keyframes ivSpin { to { transform: rotate(360deg); } }
+  @keyframes ivSway { 0%,100% { transform: rotateY(-7deg) rotateX(3deg); } 50% { transform: rotateY(7deg) rotateX(-3deg); } }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; }
+  }
+</style>
+</helmet>
+<div style="position: relative; width: 100%; overflow: hidden; background: linear-gradient(#ffffff, #ffffff)">
+
+  <nav data-nav="1" style="position: sticky; top: 0; z-index: 50; display: flex; justify-content: center; padding: 14px 16px; transition: padding .45s cubic-bezier(.22,.61,.36,1)">
+    <div data-navbar="1" style="display: flex; align-items: center; gap: 28px; width: 100%; max-width: 1180px; padding: 12px 16px 12px 20px; border-radius: 999px; background: rgba(255,255,255,.82); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border: 1px solid rgba(15,42,74,.07); box-shadow: 0 10px 30px -12px rgba(15,42,74,.18); transition: box-shadow .45s ease, padding .45s cubic-bezier(.22,.61,.36,1)">
+      <a href="#top" style="display: flex; align-items: center; gap: 10px; color: #0F2A4A">
+        <img src="./logo.jpeg" alt="Royal Shine &amp; SMILE Dental Care logo" style="width: 34px; height: 34px; border-radius: 11px; object-fit: cover; box-shadow: 0 6px 14px -6px rgba(14,124,144,.7)">
+        <span style="font-weight: 600; font-size: 16px; letter-spacing: -.01em">Royal Shine &amp; SMILE</span>
+      </a>
+      <button data-burger="1" onClick="{{ toggleMenu }}" aria-label="Open menu" style="display: none; margin-left: auto; width: 44px; height: 44px; border: 1px solid rgba(15,42,74,.12); border-radius: 14px; background: #fff; cursor: pointer; place-items: center; color: #0F2A4A; font-size: 16px; line-height: 1">☰</button>
+      <div data-navlinks="1" style="display: flex; align-items: center; gap: 22px; margin-left: auto; flex-wrap: wrap; justify-content: flex-end">
+        <a href="#about" style="font-size: 14px; font-weight: 400; color: #0F2A4A; opacity: .78" style-hover="opacity: 1; color: #0E7C90">About</a>
+        <a href="#doctors" style="font-size: 14px; font-weight: 400; color: #0F2A4A; opacity: .78" style-hover="opacity: 1; color: #0E7C90">Doctors</a>
+        <a href="#treatments" style="font-size: 14px; font-weight: 400; color: #0F2A4A; opacity: .78" style-hover="opacity: 1; color: #0E7C90">Treatments</a>
+        <a href="#contact" style="font-size: 14px; font-weight: 400; color: #0F2A4A; opacity: .78" style-hover="opacity: 1; color: #0E7C90">Contact</a>
+        <a href="#appointment" style="padding: 11px 20px; border-radius: 999px; background: #0E7C90; color: #fff; font-size: 14px; font-weight: 500; box-shadow: 0 8px 18px -8px rgba(14,124,144,.9); transition: transform .3s cubic-bezier(.22,.61,.36,1), box-shadow .3s ease" style-hover="color: #fff; transform: translateY(-2px); box-shadow: 0 14px 24px -10px rgba(14,124,144,.85)" style-active="transform: translateY(1px)">Book Appointment</a>
+      </div>
+      <div data-mobilemenu="1" style="display: none; position: absolute; top: calc(100% + 10px); left: 0; right: 0; flex-direction: column; gap: 4px; padding: 14px; border-radius: 22px; background: rgba(255,255,255,.97); backdrop-filter: blur(14px); border: 1px solid rgba(15,42,74,.08); box-shadow: 0 24px 46px -20px rgba(15,42,74,.3)">
+        <a href="#about" onClick="{{ closeMenu }}" style="padding: 13px 14px; border-radius: 12px; font-size: 15px; color: #0F2A4A" style-hover="background: #E5F4F6">About</a>
+        <a href="#doctors" onClick="{{ closeMenu }}" style="padding: 13px 14px; border-radius: 12px; font-size: 15px; color: #0F2A4A" style-hover="background: #E5F4F6">Doctors</a>
+        <a href="#treatments" onClick="{{ closeMenu }}" style="padding: 13px 14px; border-radius: 12px; font-size: 15px; color: #0F2A4A" style-hover="background: #E5F4F6">Treatments</a>
+        <a href="#contact" onClick="{{ closeMenu }}" style="padding: 13px 14px; border-radius: 12px; font-size: 15px; color: #0F2A4A" style-hover="background: #E5F4F6">Contact</a>
+        <a href="#appointment" onClick="{{ closeMenu }}" style="margin-top: 6px; padding: 15px 14px; border-radius: 14px; background: #0E7C90; color: #fff; font-size: 15px; font-weight: 500; text-align: center" style-hover="color: #fff">Book Appointment</a>
+      </div>
+    </div>
+  </nav>
+
+  <section id="top" style="position: relative; padding: 40px 20px 90px; margin-top: -80px; padding-top: 130px; overflow: hidden">
+    <div style="position: absolute; inset: 0; overflow: hidden; pointer-events: none">
+      <div style="position: absolute; inset: -6%; animation: ivKen 34s ease-in-out infinite; pointer-events: auto">
+        <img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?q=80&amp;w=2070&amp;auto=format&amp;fit=crop" alt="Dental clinic interior, generic visual" loading="eager" style="width: 100%; height: 100%; object-fit: cover; display: block">
+      </div>
+      <div style="position: absolute; inset: 0; background: linear-gradient(100deg, rgba(255,255,255,.96) 0%, rgba(255,255,255,.86) 30%, rgba(255,255,255,.38) 52%, rgba(229,244,246,.14) 72%, rgba(15,42,74,.24) 100%)"></div>
+      <div style="position: absolute; inset: auto 0 0 0; height: 180px; background: linear-gradient(rgba(255,255,255,0), #ffffff)"></div>
+    </div>
+    <div style="position: absolute; top: -160px; right: -120px; width: 620px; height: 620px; border-radius: 50%; background: radial-gradient(circle, rgba(229,244,246,.75), rgba(229,244,246,0) 68%); animation: ivGlow 11s ease-in-out infinite; pointer-events: none"></div>
+    <div style="position: relative; display: flex; flex-wrap: wrap; align-items: center; gap: 56px; max-width: 1180px; margin: 0 auto">
+
+      <div style="flex: 1 1 420px; min-width: 300px">
+        <p data-reveal="1" style="display: inline-flex; align-items: center; gap: 9px; margin: 0 0 22px; padding: 7px 14px 7px 10px; border-radius: 999px; background: #E5F4F6; color: #0E7C90; font-size: 11.5px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase">
+          <span style="width: 6px; height: 6px; border-radius: 50%; background: #0E7C90"></span>Royal Shine &amp; SMILE Dental Care
+        </p>
+        <h1 data-reveal="1" style="margin: 0; font-size: clamp(38px, 6vw, 68px); line-height: 1.06; font-weight: 600; letter-spacing: -.035em; text-wrap: pretty">
+          Not Just a Clinic,<br>a <span style="color: #0E7C90">Smile Studio</span>
+        </h1>
+        <p data-reveal="1" style="margin: 26px 0 0; max-width: 440px; font-size: clamp(15px, 1.5vw, 17.5px); line-height: 1.65; font-weight: 300; color: rgba(15,42,74,.75)">
+          Premium, advanced and comfortable dental care with affordable pricing — led by Dr. Monika Sharma, 13+ years of trusted healthcare experience.
+        </p>
+        <div data-reveal="1" style="display: flex; flex-wrap: wrap; gap: 14px; margin-top: 38px">
+          <a href="#appointment" style="padding: 16px 30px; border-radius: 14px; background: #0F2A4A; color: #fff; font-size: 15px; font-weight: 500; box-shadow: 0 16px 30px -14px rgba(15,42,74,.85); transition: transform .3s cubic-bezier(.22,.61,.36,1), box-shadow .3s ease" style-hover="color: #fff; transform: translateY(-2px); box-shadow: 0 22px 38px -16px rgba(15,42,74,.8)" style-active="transform: translateY(1px)">Book Appointment</a>
+          <a href="tel:+917889339478" style="padding: 16px 30px; border-radius: 14px; background: #fff; color: #0F2A4A; font-size: 15px; font-weight: 500; border: 1px solid rgba(15,42,74,.14); box-shadow: 0 10px 22px -16px rgba(15,42,74,.5); transition: transform .3s cubic-bezier(.22,.61,.36,1), border-color .3s ease" style-hover="color: #0E7C90; transform: translateY(-2px); border-color: rgba(14,124,144,.4)" style-active="transform: translateY(1px)">Call Now</a>
+        </div>
+        <div data-reveal="1" style="display: flex; align-items: center; gap: 14px; margin-top: 44px; padding-top: 26px; border-top: 1px solid rgba(15,42,74,.08); max-width: 440px">
+          <span style="font-size: 30px; font-weight: 600; letter-spacing: -.03em">13+</span>
+          <span style="font-size: 13px; font-weight: 300; color: rgba(15,42,74,.62)">Years of trusted healthcare experience · Women-owned &amp; operated</span>
+        </div>
+      </div>
+
+      <div data-tilt="1" style="flex: 1 1 440px; min-width: 280px; max-width: 470px; margin: 0 auto; perspective: 1250px; perspective-origin: 50% 44%">
+        <div data-tilt-inner="1" style="position: relative; transform-style: preserve-3d; transition: transform 1s cubic-bezier(.22,.61,.36,1)">
+          <div style="position: relative; transform-style: preserve-3d; animation: ivOrbit 24s ease-in-out infinite">
+
+            <div style="position: absolute; left: 50%; top: 58%; width: 86%; height: 86%; margin: -43% 0 0 -43%; border-radius: 50%; border: 1px solid rgba(14,124,144,.28); transform: rotateX(74deg); animation: ivRing 42s linear infinite"></div>
+            <div style="position: absolute; left: 50%; top: 58%; width: 62%; height: 62%; margin: -31% 0 0 -31%; border-radius: 50%; border: 1px dashed rgba(14,124,144,.2); transform: rotateX(74deg); animation: ivRing 60s linear reverse infinite"></div>
+            <div style="position: absolute; left: 50%; top: 78%; width: 54%; height: 12%; margin-left: -27%; border-radius: 50%; background: rgba(15,42,74,.26); filter: blur(26px); transform: rotateX(74deg) translateZ(-40px)"></div>
+
+            <div style="position: absolute; inset: 6% 10% 12% 4%; border-radius: 34px; background: #E5F4F6; transform: translateZ(-170px) rotateZ(-6deg)"></div>
+            <div style="position: absolute; inset: 2% 2% 6% 12%; border-radius: 32px; background: linear-gradient(150deg, rgba(255,255,255,.92), rgba(229,244,246,.45)); border: 1px solid rgba(14,124,144,.14); transform: translateZ(-90px) rotateZ(3.5deg); backdrop-filter: blur(8px)"></div>
+
+            <div style="position: relative; aspect-ratio: 1 / 1; transform-style: preserve-3d; animation: ivBreathe 10s ease-in-out infinite">
+              <div style="position: absolute; inset: 3%; border-radius: 50%; border: 1px dashed rgba(14,124,144,.3); animation: ivSpin 80s linear infinite"></div>
+              <div style="position: absolute; inset: 13%; border-radius: 50%; overflow: hidden; background: #EAF6F8; border: 1px solid rgba(255,255,255,.7); box-shadow: 0 60px 90px -50px rgba(15,42,74,.6), inset -18px -26px 60px rgba(15,42,74,.22), inset 14px 18px 40px rgba(255,255,255,.6)">
+                <img src="https://images.unsplash.com/photo-1607613009820-a29f7bb81c04?q=80&amp;w=1200&amp;auto=format&amp;fit=crop" alt="Dental care objects" loading="eager" style="width: 100%; height: 100%; object-fit: cover; display: block; animation: ivKen 38s ease-in-out infinite" />
+                <div style="position: absolute; inset: 0; background: radial-gradient(120% 120% at 30% 22%, rgba(255,255,255,.55) 0%, rgba(234,246,248,.28) 34%, rgba(111,175,188,.3) 78%, rgba(44,108,124,.5) 100%)"></div>
+              </div>
+              <div style="position: absolute; inset: 13%; border-radius: 50%; background: radial-gradient(34% 26% at 30% 20%, rgba(255,255,255,.95), rgba(255,255,255,0) 70%), radial-gradient(20% 14% at 72% 78%, rgba(229,244,246,.7), rgba(229,244,246,0) 70%); pointer-events: none"></div>
+              <div style="position: absolute; inset: 13%; border-radius: 50%; overflow: hidden; pointer-events: none">
+                <div style="position: absolute; top: -40%; left: -60%; width: 220%; height: 60%; background: linear-gradient(100deg, rgba(255,255,255,0), rgba(255,255,255,.5), rgba(255,255,255,0)); transform: rotate(18deg); animation: ivFloat 14s ease-in-out infinite"></div>
+              </div>
+            </div>
+
+            <sc-if value="{{ showFloatingCards }}" hint-placeholder-val="{{ true }}">
+              <div data-float="1.6" style="position: absolute; top: 6%; left: -8%; --z: 180px; animation: ivFloatSlow 7.5s ease-in-out infinite">
+                <div style="padding: 14px 18px; border-radius: 18px; background: rgba(255,255,255,.88); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,.85); box-shadow: 0 30px 50px -24px rgba(15,42,74,.45)">
+                  <div style="font-size: 21px; font-weight: 600; letter-spacing: -.02em">₹200</div>
+                  <div style="font-size: 11px; font-weight: 300; color: rgba(15,42,74,.62)">Consultation starting</div>
+                </div>
+              </div>
+              <div data-float="1.2" style="position: absolute; bottom: 10%; right: -7%; --z: 140px; animation: ivFloatSlow 8.5s ease-in-out .8s infinite">
+                <div style="padding: 14px 18px; border-radius: 18px; background: rgba(15,42,74,.92); backdrop-filter: blur(10px); color: #fff; border: 1px solid rgba(255,255,255,.16); box-shadow: 0 30px 50px -24px rgba(15,42,74,.7)">
+                  <div style="font-size: 13px; font-weight: 500">Mon–Sat</div>
+                  <div style="font-size: 11px; font-weight: 300; opacity: .75">Closed Sunday</div>
+                </div>
+              </div>
+              <div data-float="2.2" style="position: absolute; top: 44%; right: -10%; --z: 210px; animation: ivFloat 9.5s ease-in-out .4s infinite">
+                <div style="display: flex; align-items: center; gap: 9px; padding: 11px 16px; border-radius: 999px; background: rgba(255,255,255,.9); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,.85); box-shadow: 0 24px 40px -22px rgba(15,42,74,.4)">
+                  <span style="font-size: 12.5px; font-weight: 500">13+ Yrs Experience</span>
+                </div>
+              </div>
+            </sc-if>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about" style="position: relative; padding: 90px 20px; background: linear-gradient(#ffffff, #FAFDFD)">
+    <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 64px; max-width: 1180px; margin: 0 auto">
+      <div data-reveal="1" style="flex: 1 1 380px; min-width: 290px; perspective: 1200px">
+        <div data-depth="1" style="position: relative; transform-style: preserve-3d; transition: transform .2s linear">
+          <div style="position: absolute; inset: -18px -18px auto auto; width: 76%; height: 82%; border-radius: 28px; background: #E5F4F6; transform: translateZ(-60px) rotate(4deg)"></div>
+          <div style="position: relative; aspect-ratio: 5 / 4; border-radius: 26px; overflow: hidden; background: #F4FAFB; border: 1px solid rgba(14,124,144,.14); box-shadow: 0 40px 70px -44px rgba(15,42,74,.5)">
+            <img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?q=80&amp;w=1600&amp;auto=format&amp;fit=crop" alt="Modern dental clinic consultation room, generic visual" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; display: block">
+            <div style="position: absolute; bottom: 12px; right: 12px; padding: 6px 12px; border-radius: 999px; background: rgba(255,255,255,.92); backdrop-filter: blur(6px); font-size: 10.5px; font-weight: 400; color: rgba(15,42,74,.7)">Generic space · temporary visual</div>
+          </div>
+          <div style="position: absolute; bottom: -26px; left: -20px; display: flex; gap: 12px; animation: ivFloatSlow 9s ease-in-out infinite">
+            <div style="padding: 13px 17px; border-radius: 16px; background: #fff; border: 1px solid rgba(15,42,74,.07); box-shadow: 0 22px 40px -22px rgba(15,42,74,.4)">
+              <div style="font-size: 19px; font-weight: 600; letter-spacing: -.02em">₹200</div>
+              <div style="font-size: 10.5px; font-weight: 300; color: rgba(15,42,74,.6)">Consultation starting</div>
+            </div>
+            <div style="padding: 13px 17px; border-radius: 16px; background: #fff; border: 1px solid rgba(15,42,74,.07); box-shadow: 0 22px 40px -22px rgba(15,42,74,.4)">
+              <div style="font-size: 13px; font-weight: 500">Mon–Sat</div>
+              <div style="font-size: 10.5px; font-weight: 300; color: rgba(15,42,74,.6)">Closed Sunday</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-reveal="1" style="flex: 1 1 380px; min-width: 290px">
+        <p style="margin: 0 0 16px; font-size: 11.5px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: #0E7C90">About the clinic</p>
+        <h2 style="margin: 0; font-size: clamp(28px, 3.4vw, 42px); line-height: 1.16; font-weight: 600; letter-spacing: -.03em; max-width: 460px; text-wrap: pretty">Not Just a Clinic, a Smile Studio</h2>
+        <p style="margin: 22px 0 0; max-width: 470px; font-size: 16px; line-height: 1.7; font-weight: 300; color: rgba(15,42,74,.75)">
+          Royal Shine &amp; SMILE Dental Care is a women-owned and operated dental clinic in Naushera, offering premium, advanced and comfortable dental care with affordable pricing.
+        </p>
+        <p style="margin: 14px 0 0; max-width: 470px; font-size: 14.5px; line-height: 1.7; font-weight: 300; color: rgba(15,42,74,.62)">
+          Led by Dr. Monika Sharma, bringing 13+ years of trusted healthcare experience to every patient who walks through our doors.
+        </p>
+        <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px">
+          <span style="padding: 9px 16px; border-radius: 999px; background: #fff; border: 1px solid rgba(15,42,74,.1); font-size: 13px; font-weight: 400">Women-owned &amp; operated</span>
+          <span style="padding: 9px 16px; border-radius: 999px; background: #fff; border: 1px solid rgba(15,42,74,.1); font-size: 13px; font-weight: 400">13+ years experience</span>
+          <span style="padding: 9px 16px; border-radius: 999px; background: #fff; border: 1px solid rgba(15,42,74,.1); font-size: 13px; font-weight: 400">Premium &amp; advanced care</span>
+          <span style="padding: 9px 16px; border-radius: 999px; background: #fff; border: 1px solid rgba(15,42,74,.1); font-size: 13px; font-weight: 400">Affordable pricing</span>
+          <span style="padding: 9px 16px; border-radius: 999px; background: #fff; border: 1px solid rgba(15,42,74,.1); font-size: 13px; font-weight: 400">Patient comfort focused</span>
+        </div>
+        <div style="margin-top: 28px; padding: 22px; border-radius: 20px; background: #fff; border: 1px solid rgba(15,42,74,.08); box-shadow: 0 26px 50px -38px rgba(15,42,74,.45); max-width: 470px">
+          <div style="font-size: 10.5px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: #0E7C90">Visit Royal Shine &amp; SMILE Dental Care</div>
+          <p style="margin: 12px 0 0; font-size: 14.5px; line-height: 1.6; font-weight: 400">Hanuman Market, Naushera,<br>Forest Block,<br>Jammu and Kashmir - 185151</p>
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=Royal%20Shine%20Dental%20Clinic%2C%20Hanuman%20Market%2C%20Naushera%2C%20Forest%20Block%2C%20Jammu%20and%20Kashmir%20-%20185151" target="_blank" rel="noopener noreferrer" style="display: inline-flex; margin-top: 16px; padding: 10px 18px; border-radius: 999px; border: 1px solid rgba(15,42,74,.16); font-size: 13px; font-weight: 500; color: #0F2A4A; transition: transform .3s cubic-bezier(.22,.61,.36,1), border-color .3s ease" style-hover="color: #0E7C90; border-color: rgba(14,124,144,.45); transform: translateY(-2px)" style-active="transform: translateY(1px)">Get Directions</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="doctors" style="position: relative; padding: 90px 20px; background: #FAFDFD; overflow: hidden">
+    <div style="position: absolute; inset: 0; pointer-events: none">
+      <img src="https://images.unsplash.com/photo-1616391182219-e080b4d1043a?q=80&amp;w=2000&amp;auto=format&amp;fit=crop" alt="" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; display: block; animation: ivKen 46s ease-in-out infinite">
+      <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(250,253,253,.96) 0%, rgba(250,253,253,.72) 45%, rgba(250,253,253,.96) 100%)"></div>
+    </div>
+    <div style="position: relative; max-width: 1180px; margin: 0 auto">
+      <div data-reveal="1" style="max-width: 560px; margin-bottom: 48px">
+        <p style="margin: 0 0 14px; font-size: 11.5px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: #0E7C90">Your dentist</p>
+        <h2 style="margin: 0; font-size: clamp(28px, 3.4vw, 42px); line-height: 1.16; font-weight: 600; letter-spacing: -.03em">Thoughtful care from Dr. Monika Sharma</h2>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; gap: 26px">
+        <div data-reveal="1" style="flex: 1 1 320px; min-width: 270px; max-width: 520px; perspective: 1000px">
+          <div style="padding: 34px; border-radius: 26px; background: #fff; border: 1px solid rgba(15,42,74,.07); box-shadow: 0 30px 60px -40px rgba(15,42,74,.45); transition: transform .5s cubic-bezier(.22,.61,.36,1), box-shadow .5s ease" style-hover="transform: translate3d(0,-8px,40px) rotateX(4deg) rotateY(-2deg); box-shadow: 0 50px 84px -44px rgba(15,42,74,.55)">
+            <div style="display: grid; place-items: center; width: 76px; height: 76px; border-radius: 22px; background: linear-gradient(155deg, #E5F4F6, #ffffff); border: 1px solid rgba(14,124,144,.16); color: #0E7C90; font-size: 22px; font-weight: 600; letter-spacing: -.01em">MS</div>
+            <h3 style="margin: 26px 0 6px; font-size: 22px; font-weight: 600; letter-spacing: -.02em">Dr. Monika Sharma</h3>
+            <p style="margin: 0; font-size: 14px; font-weight: 400; color: #0E7C90">Lead Dentist</p>
+            <p style="margin: 14px 0 0; font-size: 13px; font-weight: 300; color: rgba(15,42,74,.62); letter-spacing: .04em">13+ years of trusted healthcare experience</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="treatments" style="padding: 72px 20px; background: linear-gradient(#FAFDFD, #ffffff)">
+    <div style="display: flex; flex-wrap: wrap; gap: 44px; max-width: 1180px; margin: 0 auto; align-items: flex-start">
+      <div data-reveal="1" style="flex: 1 1 300px; min-width: 270px; position: sticky; top: 110px">
+        <p style="margin: 0 0 14px; font-size: 11.5px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: #0E7C90">Services</p>
+        <h2 style="margin: 0; font-size: clamp(28px, 3.4vw, 42px); line-height: 1.16; font-weight: 600; letter-spacing: -.03em">Advanced care, thoughtfully delivered</h2>
+        <p style="margin: 18px 0 24px; font-size: 15.5px; line-height: 1.7; font-weight: 300; color: rgba(15,42,74,.72)">Comfort-focused dental procedures with premium care and affordable pricing.</p>
+        <div data-depth=".6" style="aspect-ratio: 4 / 3; border-radius: 22px; overflow: hidden; background: #F4FAFB; border: 1px solid rgba(14,124,144,.14); box-shadow: 0 30px 60px -40px rgba(15,42,74,.45); transition: transform .2s linear">
+          <img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?q=80&amp;w=1200&amp;auto=format&amp;fit=crop" alt="Dentist treating a patient, generic visual" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; display: block">
+        </div>
+      </div>
+      <div data-reveal="1" style="flex: 1 1 460px; min-width: 290px; display: flex; flex-direction: column; gap: 4px; perspective: 1100px; perspective-origin: 0% 50%">
+        <sc-for list="{{ treatments }}" as="t" hint-placeholder-count="8">
+          <div style="display: flex; align-items: center; gap: 18px; padding: 17px 20px; border-radius: 16px; border-bottom: 1px solid rgba(15,42,74,.08); background: rgba(255,255,255,0); transition: transform .45s cubic-bezier(.22,.61,.36,1), background-color .45s ease, box-shadow .45s ease" style-hover="transform: translate3d(6px,-5px,40px) rotateY(-3deg); background-color: #ffffff; box-shadow: 0 30px 56px -32px rgba(15,42,74,.5)">
+            <span style="font-family: ui-monospace, monospace; font-size: 12px; color: rgba(14,124,144,.7); min-width: 26px">{{ t.no }}</span>
+            <div style="flex: 1 1 auto; min-width: 0">
+              <div style="font-size: clamp(17px, 2vw, 21px); font-weight: 500; letter-spacing: -.02em">{{ t.name }}</div>
+              <div style="margin-top: 5px; font-size: 13.5px; font-weight: 300; color: rgba(15,42,74,.62)">{{ t.note }}</div>
+            </div>
+            <span style="display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: #E5F4F6; color: #0E7C90; font-size: 14px; flex: 0 0 auto">→</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section id="trust" style="padding: 90px 20px">
+    <div data-reveal="1" style="max-width: 1180px; margin: 0 auto; perspective: 1200px">
+      <div data-depth=".8" style="display: flex; flex-wrap: wrap; align-items: center; gap: 40px; padding: clamp(28px, 4vw, 52px); border-radius: 30px; background: linear-gradient(150deg, #E5F4F6, #ffffff 70%); border: 1px solid rgba(14,124,144,.16); box-shadow: 0 50px 90px -60px rgba(15,42,74,.5); transition: transform .2s linear">
+        <div style="flex: 0 0 auto; min-width: 160px">
+          <div style="font-size: 11px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: #0E7C90">Patient words</div>
+          <div style="margin-top: 12px; font-size: 17px; font-weight: 500">Comfortable care, trusted locally</div>
+        </div>
+        <div style="flex: 1 1 420px; min-width: 260px">
+          <div data-testimonial="0" style="display: block"><p style="margin: 0; font-size: clamp(17px, 2vw, 22px); line-height: 1.5; font-weight: 400; letter-spacing: -.01em; text-wrap: pretty">&quot;Proper treatment, cure, and diagnosis of all dental problems with all advanced facilities available.&quot;</p></div>
+          <div data-testimonial="1" style="display: none"><p style="margin: 0; font-size: clamp(17px, 2vw, 22px); line-height: 1.5; font-weight: 400; letter-spacing: -.01em; text-wrap: pretty">&quot;Two teeth implantations, a bridge, and several crowns fixed without pain by the well-skilled Dr. Monika.&quot;</p></div>
+          <div data-testimonial="2" style="display: none"><p style="margin: 0; font-size: clamp(17px, 2vw, 22px); line-height: 1.5; font-weight: 400; letter-spacing: -.01em; text-wrap: pretty">&quot;Dr. Monika and her entire staff are very courteous. Best service at a very legitimate price.&quot;</p></div>
+          <div style="display: flex; align-items: center; gap: 8px; margin-top: 18px"><button type="button" data-testimonial-prev aria-label="Previous testimonial" style="width: 34px; height: 34px; border: 1px solid rgba(15,42,74,.14); border-radius: 50%; background: #fff; color: #0F2A4A; cursor: pointer">←</button><button type="button" data-testimonial-next aria-label="Next testimonial" style="width: 34px; height: 34px; border: 1px solid rgba(15,42,74,.14); border-radius: 50%; background: #fff; color: #0F2A4A; cursor: pointer">→</button><span data-testimonial-count style="margin-left: 5px; font-size: 12px; color: rgba(15,42,74,.62)">1 / 3</span></div>
+        </div>
+        <a href="#appointment" style="flex: 0 0 auto; padding: 15px 26px; border-radius: 14px; background: #0F2A4A; color: #fff; font-size: 15px; font-weight: 500; box-shadow: 0 16px 30px -16px rgba(15,42,74,.8); transition: transform .3s cubic-bezier(.22,.61,.36,1)" style-hover="color: #fff; transform: translateY(-2px)" style-active="transform: translateY(1px)">Book a visit</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="appointment" style="position: relative; padding: 100px 20px; background: #0F2A4A; color: #fff; overflow: hidden">
+    <div style="position: absolute; inset: 0; pointer-events: none">
+      <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&amp;w=2000&amp;auto=format&amp;fit=crop" alt="" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; display: block; animation: ivKen 40s ease-in-out infinite">
+      <div style="position: absolute; inset: 0; background: linear-gradient(160deg, rgba(15,42,74,.88), rgba(15,42,74,.8) 55%, rgba(11,33,56,.92))"></div>
+    </div>
+    <div style="position: absolute; top: -180px; left: -100px; width: 560px; height: 560px; border-radius: 50%; background: radial-gradient(circle, rgba(14,124,144,.5), rgba(14,124,144,0) 70%); animation: ivGlow 13s ease-in-out infinite; pointer-events: none"></div>
+    <div style="position: absolute; bottom: -200px; right: -140px; width: 620px; height: 620px; border-radius: 50%; background: radial-gradient(circle, rgba(229,244,246,.22), rgba(229,244,246,0) 70%); pointer-events: none"></div>
+    <div style="position: relative; display: flex; flex-wrap: wrap; gap: 56px; max-width: 1180px; margin: 0 auto; align-items: center">
+      <div data-reveal="1" style="flex: 1 1 340px; min-width: 280px">
+        <p style="margin: 0 0 16px; font-size: 11.5px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: rgba(229,244,246,.75)">Appointment</p>
+        <h2 style="margin: 0; font-size: clamp(30px, 4vw, 50px); line-height: 1.1; font-weight: 600; letter-spacing: -.035em">Book Your Appointment</h2>
+        <p style="margin: 22px 0 0; max-width: 400px; font-size: 16px; line-height: 1.7; font-weight: 300; color: rgba(255,255,255,.78)">Send your details and the clinic will confirm a slot. Consultation starting around ₹200.</p>
+        <div style="display: flex; flex-wrap: wrap; gap: 26px; margin-top: 38px">
+          <div>
+            <div style="font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: rgba(229,244,246,.6)">Timings</div>
+            <div style="margin-top: 7px; font-size: 15px; font-weight: 400">Mon–Sat · 9:00 AM – 5:00 PM</div>
+          </div>
+          <div>
+            <div style="font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: rgba(229,244,246,.6)">Location</div>
+            <div style="margin-top: 7px; font-size: 15px; font-weight: 400">Naushera, Jammu and Kashmir</div>
+          </div>
+        </div>
+        <div style="margin-top: 34px; max-width: 420px; perspective: 1000px">
+          <div style="padding: 24px; border-radius: 22px; background: rgba(255,255,255,.1); backdrop-filter: blur(14px); border: 1px solid rgba(255,255,255,.2); box-shadow: 0 40px 70px -40px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.25); transition: transform .5s cubic-bezier(.22,.61,.36,1)" style-hover="transform: translate3d(0,-6px,30px) rotateX(3deg)">
+            <div style="font-size: 10.5px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: rgba(229,244,246,.7)">What happens next</div>
+            <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 16px">
+              <div style="display: flex; gap: 12px; align-items: baseline"><span style="font-family: ui-monospace, monospace; font-size: 11px; color: rgba(229,244,246,.55)">01</span><span style="font-size: 14.5px; font-weight: 300; color: rgba(255,255,255,.88)">Send your request with a preferred date</span></div>
+              <div style="display: flex; gap: 12px; align-items: baseline"><span style="font-family: ui-monospace, monospace; font-size: 11px; color: rgba(229,244,246,.55)">02</span><span style="font-size: 14.5px; font-weight: 300; color: rgba(255,255,255,.88)">The clinic calls you to confirm the slot</span></div>
+              <div style="display: flex; gap: 12px; align-items: baseline"><span style="font-family: ui-monospace, monospace; font-size: 11px; color: rgba(229,244,246,.55)">03</span><span style="font-size: 14.5px; font-weight: 300; color: rgba(255,255,255,.88)">Visit Hanuman Market at your confirmed time</span></div>
+            </div>
+          </div>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px">
+          <span style="padding: 8px 12px; border: 1px solid rgba(255,255,255,.22); border-radius: 999px; font-size: 12px; color: rgba(255,255,255,.82)">On-Site Parking Available</span>
+          <span style="padding: 8px 12px; border: 1px solid rgba(255,255,255,.22); border-radius: 999px; font-size: 12px; color: rgba(255,255,255,.82)">Restroom Available</span>
+        </div>
+        <a href="https://wa.me/917889339478?text=Hello%20Royal%20Shine%20%26%20SMILE%20Dental%20Care%2C%20I%20would%20like%20to%20book%20an%20appointment." target="_blank" rel="noopener noreferrer" style="display: inline-flex; margin-top: 18px; padding: 13px 20px; border-radius: 14px; background: #25D366; color: #073B20; font-size: 14px; font-weight: 600; transition: transform .3s ease, box-shadow .3s ease" style-hover="color: #073B20; transform: translateY(-2px); box-shadow: 0 16px 28px -14px rgba(37,211,102,.8)" style-active="transform: translateY(1px)">Book on WhatsApp</a>
+      </div>
+      <div data-reveal="1" style="flex: 1 1 380px; min-width: 290px; perspective: 1200px">
+        <form onSubmit="{{ onSubmit }}" style="display: flex; flex-direction: column; gap: 16px; padding: clamp(24px, 3vw, 36px); border-radius: 26px; background: #fff; color: #0F2A4A; box-shadow: 0 60px 100px -60px rgba(0,0,0,.7)">
+          <label style="display: flex; flex-direction: column; gap: 8px; font-size: 12.5px; font-weight: 500; letter-spacing: .04em; color: rgba(15,42,74,.7)">Full name
+            <input type="text" name="name" placeholder="Your name" style="padding: 14px 16px; border-radius: 12px; border: 1px solid rgba(15,42,74,.14); font-family: Poppins, sans-serif; font-size: 15px; font-weight: 400; color: #0F2A4A; outline: none; transition: border-color .3s ease, box-shadow .3s ease" style-focus="border-color: #0E7C90; box-shadow: 0 0 0 4px rgba(14,124,144,.12)">
+          </label>
+          <label style="display: flex; flex-direction: column; gap: 8px; font-size: 12.5px; font-weight: 500; letter-spacing: .04em; color: rgba(15,42,74,.7)">Phone
+            <input type="tel" name="phone" placeholder="10-digit mobile number" style="padding: 14px 16px; border-radius: 12px; border: 1px solid rgba(15,42,74,.14); font-family: Poppins, sans-serif; font-size: 15px; font-weight: 400; color: #0F2A4A; outline: none; transition: border-color .3s ease, box-shadow .3s ease" style-focus="border-color: #0E7C90; box-shadow: 0 0 0 4px rgba(14,124,144,.12)">
+          </label>
+          <div style="display: flex; flex-wrap: wrap; gap: 16px">
+            <label style="flex: 1 1 150px; display: flex; flex-direction: column; gap: 8px; font-size: 12.5px; font-weight: 500; letter-spacing: .04em; color: rgba(15,42,74,.7)">Treatment
+              <select name="treatment" style="padding: 14px 16px; border-radius: 12px; border: 1px solid rgba(15,42,74,.14); font-family: Poppins, sans-serif; font-size: 15px; font-weight: 400; color: #0F2A4A; background: #fff; outline: none" style-focus="border-color: #0E7C90">
+                <option>General consultation</option>
+                <sc-for list="{{ treatments }}" as="t" hint-placeholder-count="6">
+                  <option>{{ t.name }}</option>
+                </sc-for>
+              </select>
+            </label>
+            <label style="flex: 1 1 150px; display: flex; flex-direction: column; gap: 8px; font-size: 12.5px; font-weight: 500; letter-spacing: .04em; color: rgba(15,42,74,.7)">Preferred date
+              <input type="date" name="appointment_date" required style="padding: 14px 16px; border-radius: 12px; border: 1px solid rgba(15,42,74,.14); font-family: Poppins, sans-serif; font-size: 15px; font-weight: 400; color: #0F2A4A; outline: none" style-focus="border-color: #0E7C90">
+            </label>
+            <label style="flex: 1 1 150px; display: flex; flex-direction: column; gap: 8px; font-size: 12.5px; font-weight: 500; letter-spacing: .04em; color: rgba(15,42,74,.7)">Preferred time
+              <input type="time" name="appointment_time" required style="padding: 14px 16px; border-radius: 12px; border: 1px solid rgba(15,42,74,.14); font-family: Poppins, sans-serif; font-size: 15px; font-weight: 400; color: #0F2A4A; outline: none" style-focus="border-color: #0E7C90">
+            </label>
+          </div>
+          <label style="display: flex; flex-direction: column; gap: 8px; font-size: 12.5px; font-weight: 500; letter-spacing: .04em; color: rgba(15,42,74,.7)">Message
+            <textarea name="message" rows="3" placeholder="Anything we should know?" style="padding: 14px 16px; border-radius: 12px; border: 1px solid rgba(15,42,74,.14); font-family: Poppins, sans-serif; font-size: 15px; font-weight: 400; color: #0F2A4A; outline: none; resize: vertical" style-focus="border-color: #0E7C90; box-shadow: 0 0 0 4px rgba(14,124,144,.12)"></textarea>
+          </label>
+          <button type="submit" style="margin-top: 6px; padding: 17px 24px; border: none; border-radius: 14px; background: #0E7C90; color: #fff; font-family: Poppins, sans-serif; font-size: 15.5px; font-weight: 500; cursor: pointer; box-shadow: 0 18px 32px -16px rgba(14,124,144,.9); transition: transform .3s cubic-bezier(.22,.61,.36,1), box-shadow .3s ease" style-hover="transform: translateY(-2px); box-shadow: 0 24px 40px -18px rgba(14,124,144,.85)" style-active="transform: translateY(1px)">Book Appointment</button>
+          <p style="margin: 0; font-size: 12px; font-weight: 300; color: rgba(15,42,74,.55); text-align: center">{{ formNote }}</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" style="padding: 78px 20px; background: #FAFDFD">
+    <div style="max-width: 1180px; margin: 0 auto">
+      <div data-reveal="1" style="max-width: 620px; margin-bottom: 34px">
+        <p style="margin: 0 0 14px; font-size: 11.5px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: #0E7C90">Contact</p>
+        <h2 style="margin: 0; font-size: clamp(28px, 3.4vw, 42px); line-height: 1.16; font-weight: 600; letter-spacing: -.03em">Visit Royal Shine Dental Clinic</h2>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; gap: 18px">
+        <div data-reveal="1" style="flex: 1 1 280px; padding: 24px; border-radius: 20px; background: #fff; border: 1px solid rgba(15,42,74,.08); box-shadow: 0 26px 50px -38px rgba(15,42,74,.45)"><div style="font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: #0E7C90">Address</div><p style="margin: 12px 0 0; font-size: 15px; line-height: 1.7">Royal Shine Dental Clinic,<br>Hanuman Market,<br>Naushera, Forest Block,<br>Jammu and Kashmir - 185151</p></div>
+        <div data-reveal="1" style="flex: 1 1 220px; padding: 24px; border-radius: 20px; background: #fff; border: 1px solid rgba(15,42,74,.08); box-shadow: 0 26px 50px -38px rgba(15,42,74,.45)"><div style="font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: #0E7C90">Call</div><a href="tel:+917889339478" style="display: inline-block; margin-top: 12px; font-size: 20px; font-weight: 500">+91 78893 39478</a><p style="margin: 12px 0 0; font-size: 14px; line-height: 1.6">Consultation starting around ₹200</p></div>
+        <div data-reveal="1" style="flex: 1 1 280px; padding: 24px; border-radius: 20px; background: #fff; border: 1px solid rgba(15,42,74,.08); box-shadow: 0 26px 50px -38px rgba(15,42,74,.45)"><div style="font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: #0E7C90">Hours</div><p style="margin: 12px 0 0; font-size: 14px; line-height: 1.75">Monday: 9:00 AM – 6:00 PM<br>Tuesday–Saturday: 9:00 AM – 5:00 PM<br>Sunday: Closed</p></div>
+        <div data-reveal="1" style="flex: 1 1 220px; padding: 24px; border-radius: 20px; background: #fff; border: 1px solid rgba(15,42,74,.08); box-shadow: 0 26px 50px -38px rgba(15,42,74,.45)"><div style="font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: #0E7C90">Payments</div><p style="margin: 12px 0 0; font-size: 14px; line-height: 1.75">Google Pay<br>Cash<br>NFC Mobile Payments</p></div>
+      </div>
+      <div data-reveal="1" style="margin-top: 24px; overflow: hidden; border-radius: 22px; border: 1px solid rgba(15,42,74,.1); background: #E5F4F6; box-shadow: 0 30px 60px -40px rgba(15,42,74,.45)"><div style="padding: 20px 24px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px"><div><div style="font-size: 16px; font-weight: 500">Royal Shine Dental Clinic</div><div style="margin-top: 4px; font-size: 13px; color: rgba(15,42,74,.68)">Hanuman Market, Naushera, Jammu and Kashmir - 185151</div></div><a href="https://www.google.com/maps/search/?api=1&amp;query=Royal%20Shine%20Dental%20Clinic%2C%20Hanuman%20Market%2C%20Naushera%2C%20Forest%20Block%2C%20Jammu%20and%20Kashmir%20-%20185151" target="_blank" rel="noopener noreferrer" style="padding: 11px 17px; border-radius: 999px; background: #0F2A4A; color: #fff; font-size: 13px; font-weight: 500">Open in Google Maps</a></div></div>
+    </div>
+  </section>
+
+  <footer style="padding: 60px 20px 44px; background: #0B2138; color: rgba(255,255,255,.8)">
+    <div style="display: flex; flex-wrap: wrap; gap: 32px; align-items: flex-start; justify-content: space-between; max-width: 1180px; margin: 0 auto">
+      <div>
+        <div style="display: flex; align-items: center; gap: 10px; color: #fff">
+          <img src="./logo.jpeg" alt="Royal Shine &amp; SMILE Dental Care logo" style="width: 32px; height: 32px; border-radius: 10px; object-fit: cover">
+          <span style="font-size: 16px; font-weight: 500">Royal Shine &amp; SMILE Dental Care</span>
+        </div>
+        <p style="margin: 16px 0 0; font-size: 14px; font-weight: 300">Royal Shine Dental Clinic, Hanuman Market, Naushera, Forest Block, Jammu and Kashmir - 185151</p>
+        <p style="margin: 6px 0 0; font-size: 14px; font-weight: 300"><a href="tel:+917889339478" style="color: rgba(255,255,255,.8)">+91 78893 39478</a> · Mon–Sat · Consultation starting around ₹200</p>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; gap: 22px">
+        <a href="#about" style="font-size: 14px; font-weight: 300; color: rgba(255,255,255,.75)" style-hover="color: #fff">About</a>
+        <a href="#doctors" style="font-size: 14px; font-weight: 300; color: rgba(255,255,255,.75)" style-hover="color: #fff">Doctors</a>
+        <a href="#treatments" style="font-size: 14px; font-weight: 300; color: rgba(255,255,255,.75)" style-hover="color: #fff">Services</a>
+        <a href="#appointment" style="font-size: 14px; font-weight: 300; color: rgba(255,255,255,.75)" style-hover="color: #fff">Appointment</a>
+        <a href="https://wa.me/917889339478?text=Hello%20Royal%20Shine%20%26%20SMILE%20Dental%20Care%2C%20I%20would%20like%20to%20book%20an%20appointment." target="_blank" rel="noopener noreferrer" style="font-size: 14px; font-weight: 300; color: rgba(255,255,255,.75)" style-hover="color: #fff">WhatsApp</a>
+        <a href="https://www.google.com/maps/search/?api=1&amp;query=Royal%20Shine%20Dental%20Clinic%2C%20Hanuman%20Market%2C%20Naushera%2C%20Forest%20Block%2C%20Jammu%20and%20Kashmir%20-%20185151" target="_blank" rel="noopener noreferrer" style="font-size: 14px; font-weight: 300; color: rgba(255,255,255,.75)" style-hover="color: #fff">Google Maps</a>
+      </div>
+    </div>
+    <div style="max-width: 1180px; margin: 36px auto 0; padding-top: 22px; border-top: 1px solid rgba(255,255,255,.1); font-size: 12.5px; font-weight: 300; color: rgba(255,255,255,.55)">Royal Shine &amp; SMILE Dental Care · Monday–Saturday 9:00 AM – 5:00 PM · Sunday Closed</div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;showFloatingCards&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;3D depth&quot;},&quot;parallax&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;3D depth&quot;}}">
+class Component extends DCLogic {
+  componentDidMount() {
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const els = Array.from(document.querySelectorAll('[data-reveal]'));
+    const show = (el) => {
+      el.dataset.ivShown = '1';
+      el.style.opacity = '1';
+      el.style.transform = 'translateY(0)';
+    };
+    const pending = [];
+    els.forEach((el) => {
+      if (reduced || el.dataset.ivShown === '1') { show(el); return; }
+      const r = el.getBoundingClientRect();
+      if (r.top < window.innerHeight * 1.1) { show(el); return; }
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(25px)';
+      el.style.transition = 'opacity .9s cubic-bezier(.22,.61,.36,1), transform .9s cubic-bezier(.22,.61,.36,1)';
+      pending.push(el);
+    });
+    if (pending.length && 'IntersectionObserver' in window) {
+      this._io = new IntersectionObserver((entries) => {
+        entries.forEach((e, i) => {
+          if (e.isIntersecting) {
+            setTimeout(() => show(e.target), Math.min(i, 4) * 90);
+            this._io.unobserve(e.target);
+          }
+        });
+      }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
+      pending.forEach((el) => this._io.observe(el));
+      setTimeout(() => pending.forEach((el) => {
+        if (el.getBoundingClientRect().top < window.innerHeight * 1.1) show(el);
+      }), 2200);
+    } else {
+      pending.forEach(show);
+    }
+    this._onRevealScroll = () => {
+      document.querySelectorAll('[data-reveal]').forEach((el) => {
+        if (el.dataset.ivShown !== '1' && el.getBoundingClientRect().top < window.innerHeight * 0.95) show(el);
+      });
+    };
+    window.addEventListener('scroll', this._onRevealScroll, { passive: true });
+
+    const depths = Array.from(document.querySelectorAll('[data-depth]'));
+    if (!reduced && depths.length) {
+      let queued = false;
+      this._onDepth = () => {
+        if (queued) return;
+        queued = true;
+        requestAnimationFrame(() => {
+          queued = false;
+          const vh = window.innerHeight;
+          const narrow = window.innerWidth < 820;
+          depths.forEach((el) => {
+            const r = el.getBoundingClientRect();
+            const p = Math.max(-1, Math.min(1, (r.top + r.height / 2 - vh / 2) / vh));
+            const k = narrow ? 0.35 : 1;
+            const d = parseFloat(el.getAttribute('data-depth')) || 1;
+            el.style.transform = 'perspective(1200px) rotateX(' + (p * 4 * d * k).toFixed(2) + 'deg) translateY(' + (p * -16 * d * k).toFixed(1) + 'px) translateZ(0)';
+          });
+        });
+      };
+      window.addEventListener('scroll', this._onDepth, { passive: true });
+      this._onDepth();
+    }
+
+    const bar = document.querySelector('[data-navbar]');
+    const nav = document.querySelector('[data-nav]');
+    this._onScroll = () => {
+      const compact = window.scrollY > 40;
+      if (!bar) return;
+      bar.style.padding = compact ? '7px 12px 7px 14px' : '12px 16px 12px 20px';
+      bar.style.boxShadow = compact ? '0 14px 34px -14px rgba(15,42,74,.26)' : '0 10px 30px -12px rgba(15,42,74,.18)';
+      if (nav) nav.style.padding = compact ? '8px 16px' : '14px 16px';
+    };
+    window.addEventListener('scroll', this._onScroll, { passive: true });
+    this._onScroll();
+
+    const burger = document.querySelector('[data-burger]');
+    const links = document.querySelector('[data-navlinks]');
+    const menu = document.querySelector('[data-mobilemenu]');
+    this._applyNav = () => {
+      const mobile = window.innerWidth < 760;
+      if (burger) burger.style.display = mobile ? 'grid' : 'none';
+      if (links) links.style.display = mobile ? 'none' : 'flex';
+      if (menu && !mobile) menu.style.display = 'none';
+      if (menu && mobile && !this._menuOpen) menu.style.display = 'none';
+      const c1 = document.querySelector('[data-float="1.6"]');
+      const c2 = document.querySelector('[data-float="1.2"]');
+      const c3 = document.querySelector('[data-float="2.2"]');
+      if (c1) {
+        c1.style.left = mobile ? '10%' : '-8%';
+        c1.style.top = mobile ? '2%' : '6%';
+        c1.style.setProperty('--z', mobile ? '30px' : '180px');
+      }
+      if (c2) {
+        c2.style.right = mobile ? '8%' : '-7%';
+        c2.style.bottom = mobile ? '4%' : '10%';
+        c2.style.setProperty('--z', mobile ? '20px' : '140px');
+      }
+      if (c3) c3.style.display = mobile ? 'none' : 'block';
+    };
+    window.addEventListener('resize', this._applyNav);
+    this._applyNav();
+
+    const testimonials = Array.from(document.querySelectorAll('[data-testimonial]'));
+    const previousTestimonial = document.querySelector('[data-testimonial-prev]');
+    const nextTestimonial = document.querySelector('[data-testimonial-next]');
+    const testimonialCount = document.querySelector('[data-testimonial-count]');
+    let testimonialIndex = 0;
+    const showTestimonial = (index) => {
+      testimonialIndex = (index + testimonials.length) % testimonials.length;
+      testimonials.forEach((testimonial, i) => { testimonial.style.display = i === testimonialIndex ? 'block' : 'none'; });
+      if (testimonialCount) testimonialCount.textContent = (testimonialIndex + 1) + ' / ' + testimonials.length;
+    };
+    if (testimonials.length) {
+      if (previousTestimonial) previousTestimonial.addEventListener('click', () => showTestimonial(testimonialIndex - 1));
+      if (nextTestimonial) nextTestimonial.addEventListener('click', () => showTestimonial(testimonialIndex + 1));
+    }
+
+    const stage = document.querySelector('[data-tilt]');
+    const inner = document.querySelector('[data-tilt-inner]');
+    const parallax = (this.props.parallax ?? true) && !reduced && window.innerWidth > 820;
+    if (stage && inner && parallax) {
+      const floats = Array.from(stage.querySelectorAll('[data-float]'));
+      this._onMove = (e) => {
+        const r = stage.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width - 0.5;
+        const y = (e.clientY - r.top) / r.height - 0.5;
+        inner.style.transform = 'rotateY(' + (x * 7).toFixed(2) + 'deg) rotateX(' + (-y * 6).toFixed(2) + 'deg)';
+        floats.forEach((el) => {
+          const d = parseFloat(el.getAttribute('data-float')) || 1;
+          el.style.setProperty('--mx', (x * 14 * d).toFixed(1) + 'px');
+          el.style.setProperty('--my', (y * 12 * d).toFixed(1) + 'px');
+        });
+      };
+      this._onLeave = () => {
+        inner.style.transform = 'rotateY(0deg) rotateX(0deg)';
+        floats.forEach((el) => { el.style.setProperty('--mx', '0px'); el.style.setProperty('--my', '0px'); });
+      };
+      stage.addEventListener('pointermove', this._onMove);
+      stage.addEventListener('pointerleave', this._onLeave);
+      this._stage = stage;
+    }
+  }
+
+  componentWillUnmount() {
+    if (this._io) this._io.disconnect();
+    window.removeEventListener('scroll', this._onScroll);
+    if (this._onDepth) window.removeEventListener('scroll', this._onDepth);
+    if (this._onRevealScroll) window.removeEventListener('scroll', this._onRevealScroll);
+    if (this._applyNav) window.removeEventListener('resize', this._applyNav);
+    if (this._stage) {
+      this._stage.removeEventListener('pointermove', this._onMove);
+      this._stage.removeEventListener('pointerleave', this._onLeave);
+    }
+  }
+
+  renderVals() {
+    const names = [
+      ['Root Canal Treatment (RCT)', 'Painless single or multi-sitting root canal treatment with custom crown placement.'],
+      ['Laser Dentistry', 'Advanced minimally invasive gum and soft-tissue treatments.'],
+      ['Dental Implants & Bridges', 'Tooth restoration using implant technology and dental bridge solutions.'],
+      ['Cosmetic & Aesthetic Dentistry', 'Teeth scaling, whitening, polishing and smile designing.'],
+      ['Pediatric Dental Care', "Gentle dental care designed for children's oral health."],
+      ['Sedation & Emergency Dentistry', 'Prompt care for sudden dental pain or accidental oral trauma with comfort-focused sedation options.']
+    ];
+    return {
+      treatments: names.map((t, i) => ({ no: String(i + 1).padStart(2, '0'), name: t[0], note: t[1] })),
+      showFloatingCards: this.props.showFloatingCards ?? true,
+      formNote: 'Your appointment request will be sent securely to the clinic.',
+      onSubmit: async (e) => {
+        e.preventDefault();
+        const form = e.currentTarget;
+        const submit = form.querySelector('button[type="submit"]');
+        const data = new FormData(form);
+        const payload = {
+          name: String(data.get('name') || '').trim(),
+          phone: String(data.get('phone') || '').trim(),
+          treatment: String(data.get('treatment') || '').trim(),
+          appointment_date: String(data.get('appointment_date') || '').trim(),
+          appointment_time: String(data.get('appointment_time') || '').trim(),
+          message: String(data.get('message') || '').trim()
+        };
+        if (!payload.name || !payload.phone || !payload.appointment_date || !payload.appointment_time) {
+          this.setState({ formNote: 'Please enter your name, phone number, preferred date, and preferred time.' });
+          return;
+        }
+        if (submit) { submit.disabled = true; submit.textContent = 'Sending...'; }
+        this.setState({ formNote: 'Sending your appointment request...' });
+        try {
+          const response = await fetch('https://ttvyuavtvpwmceulrdpb.supabase.co/rest/v1/appointments', {
+            method: 'POST',
+            headers: {
+              apikey: 'sb_publishable_TgEcOTdaCnZWJrFQ26CvHg_6KHR4RJo',
+              Authorization: 'Bearer sb_publishable_TgEcOTdaCnZWJrFQ26CvHg_6KHR4RJo',
+              'Content-Type': 'application/json',
+              Prefer: 'return=minimal'
+            },
+            body: JSON.stringify(payload)
+          });
+          if (!response.ok) throw new Error('Appointment request failed');
+          form.reset();
+          this.setState({ formNote: 'Thank you. Your appointment request has been sent.' });
+        } catch (error) {
+          this.setState({ formNote: 'We could not send your request right now. Please call +91 78893 39478.' });
+        } finally {
+          if (submit) { submit.disabled = false; submit.textContent = 'Book Appointment'; }
+        }
+      },
+      toggleMenu: () => {
+        const menu = document.querySelector('[data-mobilemenu]');
+        if (!menu) return;
+        this._menuOpen = menu.style.display === 'none' || !menu.style.display;
+        menu.style.display = this._menuOpen ? 'flex' : 'none';
+      },
+      closeMenu: () => {
+        const menu = document.querySelector('[data-mobilemenu]');
+        this._menuOpen = false;
+        if (menu) menu.style.display = 'none';
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>
